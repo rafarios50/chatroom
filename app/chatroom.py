@@ -60,7 +60,6 @@ def parse_stock_command(content, users, chatroom_id):
             high_value = 'N/D'
         stockbot_userObj = User.find_user('stockbot')
         messageObj = Message(stockbot_userObj.id, f'{stock_code} quote is ${high_value} per share.', '/stock', chatroom_id)
-        messageObj.add_message()
         return (True, messageObj)
     except:
         print(f'command given in {content} is unknown')
