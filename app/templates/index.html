@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Available chatrooms{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('chatroom.create') }}">New chatroom</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for chatroom in chatrooms %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ chatroom['chatroom_name'] }}</h1>
+          <li><a href="{{ url_for('chatroom.join', id=chatroom['id']) }}">Join chatroom</a></li>
+          <div class="about">by {{ chatroom['username'] }} on {{ chatroom['created'].strftime('%Y-%m-%d') }}
+          {% if g.user['id'] == chatroom['author_id'] %}
+            <form action="{{ url_for('chatroom.delete', id=chatroom['id']) }}" method="post">
+              <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+            </form>
+          {% endif %}
+          </div>
+        </div>        
+      </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

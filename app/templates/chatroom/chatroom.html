@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+  <h1>{% block title %}Welcome {{ g.user['username'] }} to {{ chatroom.chatroom_name }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<meta http-equiv="refresh" content="8"/>
+<!-- <script>
+function timedRefresh(timeoutPeriod) {
+	setTimeout("location.reload(true);",timeoutPeriod);
+}
+window.onload = timedRefresh(5000);
+</script> -->
+<div class="container darker">
+	{% for message in messages %}
+	 <p> {{ users[message.author_id] }} <i>({{ message.created}})</i> says: {{ message.content }}</p>
+	{% endfor %}
+ </div>
+	<form method="post">
+	    <label for="new_message">New message:</label>
+	    <textarea name="content" id="content" value="{{ request.form['content'] }}" required></textarea>
+	    <input type="submit" value="Send">
+ 	</form>
+ 	<p>Use /stock=stock_code to send a broadcast with the high value for the given stock_code from <a href="https://stooq.com/"></a>https://stooq.com/</p>
+{% endblock %}
